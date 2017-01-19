@@ -13,20 +13,55 @@ class MessagesViewController: MSMessagesAppViewController, UIPickerViewDelegate,
     
     var introPicker: UIPickerView = UIPickerView()
     var dummyArray = ["Friends1", "Friends2", "Friends3"]
+    var startButton:UIButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.addIntroPicker), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.initialSetup), userInfo: nil, repeats: false)
+        
+        initialSetup()
+    }
+    
+    func initialSetup(){
+        addIntroPicker()
+        addStartButton()
     }
     
     func addIntroPicker() {
     
         introPicker.delegate = self
-        introPicker.frame = CGRect(x:0, y:0, width: self.view.bounds.width, height: self.view.bounds.height)
+        introPicker.frame = CGRect(x:0, y:0, width: self.view.bounds.width/2, height: self.view.bounds.height)
         self.view.addSubview(introPicker)
         introPicker.backgroundColor = UIColor.clear
+        
+    }
+    
+    func addStartButton(){
+        
+        startButton = UIButton(type: .custom)
+        startButton.frame = CGRect(x: (self.view.bounds.width/2) + 20, y: self.view.bounds.height/2, width: (self.view.bounds.width/2) - 40, height: 30 )
+        startButton.addTarget(self, action: #selector(self.pressedStart), for: .touchUpInside)
+        startButton.setTitle("Caption", for: .normal)
+        startButton.titleLabel?.font = UIFont(name: "Arial", size: 16)
+        startButton.setTitleColor(UIColor.black, for: .normal)
+//        startButton.backgroundColor = UIColor(colorLiteralRed: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        startButton.backgroundColor = UIColor.yellow
+        
+        
+        startButton.layer.borderWidth = 2.0
+        startButton.layer.borderColor = (UIColor.black).cgColor
+        startButton.layer.masksToBounds = false
+        startButton.layer.shadowRadius = 5.0
+        startButton.layer.shadowOpacity = 0.3
+        startButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        startButton.layer.shadowColor = (UIColor.black).cgColor
+        
+        self.view.insertSubview(startButton, aboveSubview: introPicker)
+    }
+    
+    func pressedStart(){
         
     }
     
@@ -77,7 +112,7 @@ class MessagesViewController: MSMessagesAppViewController, UIPickerViewDelegate,
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        <#code#>
+        
     }
     
     override func didReceiveMemoryWarning() {
